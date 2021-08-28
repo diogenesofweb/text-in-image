@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+    <style>
+      body {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <canvas
+        id="myCanvas"
+        width="1200"
+        height="630"
+        style="outline: 1px solid orange; outline-offset: 1rem"
+      >
+      </canvas>
+    </section>
+
+    <div style="display: none"><img id="source" src="card-empty.png" /></div>
+  </body>
+
+  <script>
+    const width = 1200;
+    const height = 630;
+
+    const midWidth = width / 2;
+
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const image = document.getElementById("source");
+
+    image.addEventListener("load", (e) => {
+      ctx.drawImage(image, 0, 0, width, height);
+
+      ctx.font = "bold 60pt Nimbus Mono PS";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+
+      const gradient = ctx.createLinearGradient(0, 0, width, 0);
+      gradient.addColorStop(0.33, "hsla(200, 100%, 75%, 1)");
+      gradient.addColorStop(0.66, "hsla(300, 100%, 75%, 1)");
+      ctx.fillStyle = gradient;
+
+      const text = "*** /To be /or /not to be /***";
+      const lines = text.split(" /");
+
+      const paddingTop = 60;
+      const lineHeight = 90;
+
+      lines.forEach((line, i) => {
+        ctx.fillText(line, midWidth, paddingTop + lineHeight * i);
+      });
+
+      ctx.fillStyle = "hsla(300, 100%, 75%, .75)";
+      ctx.font = "bold 30pt monospace";
+      ctx.fillText("*** www.example.com ***", midWidth, height - 100);
+
+      // ctx.beginPath();
+      // ctx.moveTo(midWidth, 0);
+      // ctx.lineTo(midWidth, height);
+      // ctx.stroke();
+    });
+  </script>
+</html>
